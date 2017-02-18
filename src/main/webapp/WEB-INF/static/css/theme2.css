@@ -1,0 +1,13 @@
+
+
+.login-info a{color: #fff;}
+.login-info a:hover{color: #13F52E;}
+#left-panel{background: #10A795;}
+#ribbon{background: #10A795;}
+nav ul li a{color: #fff;}
+nav ul li a:hover{background: #fff;color: #10A795!important;}
+nav ul li a:hover b{color: #10A795!important;}
+nav ul .active a{background: #fff;color: #10A795!important;}
+nav ul li a:active{background: #fff!important;color: #10A795!important;}
+nav ul ul li>a:hover{background-color: #fff!important;}
+
