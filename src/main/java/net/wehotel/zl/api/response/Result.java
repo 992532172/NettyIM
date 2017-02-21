@@ -7,7 +7,9 @@ public class Result implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private String code;// 状态码 1 成功, -1 失败
+    public static final String SUCCESS_CODE = "0";
+    
+    private String code = "0";// 状态码 0 成功, -1 失败
     private String msg;// 消息详情
 
     public String getCode() {

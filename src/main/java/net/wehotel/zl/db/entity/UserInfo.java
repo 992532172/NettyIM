@@ -5,7 +5,7 @@ import java.util.Date;
 public class UserInfo {
     private Integer id;
 
-    private String userid;
+    private String username;
 
     private String password;
 
@@ -23,12 +23,12 @@ public class UserInfo {
         this.id = id;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {

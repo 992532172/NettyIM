@@ -3,7 +3,6 @@ package net.wehotel.zl.netty;
 import io.netty.util.CharsetUtil;
 
 import java.nio.charset.Charset;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Netty服务器用到的静态常量
@@ -18,5 +17,4 @@ public class ConstNetty {
 
     public static int NETTY_PORT = 9999;// netty服务器监听接口
     
-    public static ConcurrentLinkedQueue<E> clientQueue = new ConcurrentLinkedQueue<>();
 }

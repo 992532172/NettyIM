@@ -28,7 +28,7 @@ public class UserService {
         Result rs = new Result();
 
         // 校验username唯一性
-        UserInfo userinfo = userdbService.findByUsername(rq.getUserid());
+        UserInfo userinfo = userdbService.findByUsername(rq.getUsername());
         if (userinfo != null) {
             rs.setValue("-1", "该账户已存在");
             return rs;
@@ -40,7 +40,7 @@ public class UserService {
             boolean success = userdbService.insertRecord(registerUser);
             if (success) {
                 // 返回用户id
-                userinfo = userdbService.findByUsername(rq.getUserid());
+                userinfo = userdbService.findByUsername(rq.getUsername());
                 rs.setValue("0", userinfo.getId() + "");
                 return rs;
             }
@@ -65,18 +65,18 @@ public class UserService {
             rs.setValue("-1", "用户名密码不能为空");
             return rs;
         }
-        UserInfo userinfo = userdbService.findByUsername(rq.getUserid());
+        UserInfo userinfo = userdbService.findByUsername(rq.getUsername());
         if (userinfo == null || !rq.getPassword().equals(userinfo.getPassword())) {
             rs.setValue("-1", "用户名/密码不正确");
             return rs;
         }
-        rs.setValue("0", userinfo.getUserid() + "");
+        rs.setValue("0", userinfo.getId() + "");
         return rs;
     }
 
     private UserInfo copyUserInfo(UserDomain domain) {
         UserInfo info = new UserInfo();
-        info.setUserid(domain.getUserid());
+        info.setUsername(domain.getUsername());
         info.setPassword(domain.getPassword());
         info.setNickname(domain.getNickname());
         info.setEmail(domain.getEmail());
@@ -84,7 +84,7 @@ public class UserService {
     }
 
     private boolean loginParmCheck(UserDomain rq) {
-        if (rq == null || StringUtils.isBlank(rq.getUserid()) || StringUtils.isBlank(rq.getPassword())) {
+        if (rq == null || StringUtils.isBlank(rq.getUsername()) || StringUtils.isBlank(rq.getPassword())) {
             return false;
         }
         return true;

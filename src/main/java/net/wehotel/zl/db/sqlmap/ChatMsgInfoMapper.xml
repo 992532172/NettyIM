@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.wehotel.zl.db.dao.ChatMsgInfoMapper" >
+  <resultMap id="BaseResultMap" type="net.wehotel.zl.db.entity.ChatMsgInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="msgtype" property="msgtype" jdbcType="VARCHAR" />
+    <result column="speakerid" property="speakerid" jdbcType="VARCHAR" />
+    <result column="senderid" property="senderid" jdbcType="VARCHAR" />
+    <result column="receiverid" property="receiverid" jdbcType="VARCHAR" />
+    <result column="sendtime" property="sendtime" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="net.wehotel.zl.db.entity.ChatMsgInfo" extends="BaseResultMap" >
+    <result column="msgcontent" property="msgcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, msgtype, speakerid, senderid, receiverid, sendtime
+  </sql>
+  <sql id="Blob_Column_List" >
+    msgcontent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="net.wehotel.zl.db.entity.ChatMsgInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from chat_msg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="net.wehotel.zl.db.entity.ChatMsgInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chat_msg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from chat_msg_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from chat_msg_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.wehotel.zl.db.entity.ChatMsgInfoExample" >
+    delete from chat_msg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.wehotel.zl.db.entity.ChatMsgInfo" >
+    insert into chat_msg_info (id, msgtype, speakerid, 
+      senderid, receiverid, sendtime, 
+      msgcontent)
+    values (#{id,jdbcType=INTEGER}, #{msgtype,jdbcType=VARCHAR}, #{speakerid,jdbcType=VARCHAR}, 
+      #{senderid,jdbcType=VARCHAR}, #{receiverid,jdbcType=VARCHAR}, #{sendtime,jdbcType=DATE}, 
+      #{msgcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.wehotel.zl.db.entity.ChatMsgInfo" >
+    insert into chat_msg_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="msgtype != null" >
+        msgtype,
+      </if>
+      <if test="speakerid != null" >
+        speakerid,
+      </if>
+      <if test="senderid != null" >
+        senderid,
+      </if>
+      <if test="receiverid != null" >
+        receiverid,
+      </if>
+      <if test="sendtime != null" >
+        sendtime,
+      </if>
+      <if test="msgcontent != null" >
+        msgcontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="msgtype != null" >
+        #{msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerid != null" >
+        #{speakerid,jdbcType=VARCHAR},
+      </if>
+      <if test="senderid != null" >
+        #{senderid,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverid != null" >
+        #{receiverid,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=DATE},
+      </if>
+      <if test="msgcontent != null" >
+        #{msgcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.wehotel.zl.db.entity.ChatMsgInfoExample" resultType="java.lang.Integer" >
+    select count(*) from chat_msg_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update chat_msg_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgtype != null" >
+        msgtype = #{record.msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speakerid != null" >
+        speakerid = #{record.speakerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.senderid != null" >
+        senderid = #{record.senderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverid != null" >
+        receiverid = #{record.receiverid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendtime != null" >
+        sendtime = #{record.sendtime,jdbcType=DATE},
+      </if>
+      <if test="record.msgcontent != null" >
+        msgcontent = #{record.msgcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update chat_msg_info
+    set id = #{record.id,jdbcType=INTEGER},
+      msgtype = #{record.msgtype,jdbcType=VARCHAR},
+      speakerid = #{record.speakerid,jdbcType=VARCHAR},
+      senderid = #{record.senderid,jdbcType=VARCHAR},
+      receiverid = #{record.receiverid,jdbcType=VARCHAR},
+      sendtime = #{record.sendtime,jdbcType=DATE},
+      msgcontent = #{record.msgcontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update chat_msg_info
+    set id = #{record.id,jdbcType=INTEGER},
+      msgtype = #{record.msgtype,jdbcType=VARCHAR},
+      speakerid = #{record.speakerid,jdbcType=VARCHAR},
+      senderid = #{record.senderid,jdbcType=VARCHAR},
+      receiverid = #{record.receiverid,jdbcType=VARCHAR},
+      sendtime = #{record.sendtime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.wehotel.zl.db.entity.ChatMsgInfo" >
+    update chat_msg_info
+    <set >
+      <if test="msgtype != null" >
+        msgtype = #{msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerid != null" >
+        speakerid = #{speakerid,jdbcType=VARCHAR},
+      </if>
+      <if test="senderid != null" >
+        senderid = #{senderid,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverid != null" >
+        receiverid = #{receiverid,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        sendtime = #{sendtime,jdbcType=DATE},
+      </if>
+      <if test="msgcontent != null" >
+        msgcontent = #{msgcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.wehotel.zl.db.entity.ChatMsgInfo" >
+    update chat_msg_info
+    set msgtype = #{msgtype,jdbcType=VARCHAR},
+      speakerid = #{speakerid,jdbcType=VARCHAR},
+      senderid = #{senderid,jdbcType=VARCHAR},
+      receiverid = #{receiverid,jdbcType=VARCHAR},
+      sendtime = #{sendtime,jdbcType=DATE},
+      msgcontent = #{msgcontent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.wehotel.zl.db.entity.ChatMsgInfo" >
+    update chat_msg_info
+    set msgtype = #{msgtype,jdbcType=VARCHAR},
+      speakerid = #{speakerid,jdbcType=VARCHAR},
+      senderid = #{senderid,jdbcType=VARCHAR},
+      receiverid = #{receiverid,jdbcType=VARCHAR},
+      sendtime = #{sendtime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

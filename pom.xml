@@ -11,11 +11,22 @@
 	</properties>
 
 	<dependencies>
+		<!-- private Repo -->
+		<dependency>
+			<groupId>net.wehotel.zl</groupId>
+			<artifactId>itframework</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- apache -->
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.1</version>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
 		</dependency>
 		<!-- netty -->
 		<dependency>

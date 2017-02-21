@@ -9,7 +9,7 @@ public class UserDomain implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     private Integer id;// 流水号，主键
-    private String userid;// 帐号 唯一
+    private String username;// 帐号 唯一
     private String password;// 密码
     private String nickname;// 昵称
     private String email;// 邮箱
@@ -22,15 +22,7 @@ public class UserDomain implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
-
+    
     public String getPassword() {
         return password;
     }
@@ -63,9 +55,17 @@ public class UserDomain implements Serializable {
         this.createtime = createtime;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
-        return "{ \"" + (id != null ? "id\" : \"" + id + "\", \"" : "") + (userid != null ? "userid\" : \"" + userid + "\", \"" : "")
+        return "{ \"" + (id != null ? "id\" : \"" + id + "\", \"" : "") + (username != null ? "username\" : \"" + username + "\", \"" : "")
                 + (password != null ? "password\" : \"" + password + "\", \"" : "")
                 + (nickname != null ? "nickname\" : \"" + nickname + "\", \"" : "") + (email != null ? "email\" : \"" + email + "\", \"" : "")
                 + (createtime != null ? "createtime\" : \"" + createtime : "") + "\"}";

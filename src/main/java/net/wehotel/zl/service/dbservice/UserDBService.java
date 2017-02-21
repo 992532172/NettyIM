@@ -33,7 +33,7 @@ public class UserDBService {
     public UserInfo findByUsername(String username) {
         try {
             UserInfoExample example = new UserInfoExample();
-            example.createCriteria().andUseridEqualTo(username);
+            example.createCriteria().andUsernameEqualTo(username);
             List<UserInfo> userinfo = userInfoMapper.selectByExample(example);
             if (CollectionUtils.isNotEmpty(userinfo)) {
                 return userinfo.get(0);

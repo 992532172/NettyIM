@@ -1,57 +1,82 @@
 package net.wehotel.zl.api.domain;
 
-public class ChatMsgDomain {
-    private long id;// 消息流水号
-    private String msgType;// 消息类型
-    private String speakerId;// 发言者Id
-    private String reveiverId;// 接收者Id(可以是群组id)
-    private String msgContent;// 消息内容
+import java.util.Date;
 
-    public long getId() {
+public class ChatMsgDomain {
+    public static final String SIMPLE_CHAT = "1";
+    public static final String GROUP_CHAT = "2";
+
+    private int id;// 消息流水号
+    private Date sendtime;// 服务器接收到消息的时间
+    private String msgtype;// 消息类型
+    private String speakerid;// 发言者Id
+    private String senderid;
+    private String receiverid;// 接收者Id(可以是群组id)
+    private String msgcontent;// 消息内容
+
+    public String getMsgcontent() {
+        return msgcontent;
+    }
+
+    public void setMsgcontent(String msgcontent) {
+        this.msgcontent = msgcontent;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getMsgType() {
-        return msgType;
+    public Date getSendtime() {
+        return sendtime;
     }
 
-    public void setMsgType(String msgType) {
-        this.msgType = msgType;
+    public void setSendtime(Date sendtime) {
+        this.sendtime = sendtime;
     }
 
-    public String getSpeakerId() {
-        return speakerId;
+    public String getMsgtype() {
+        return msgtype;
     }
 
-    public void setSpeakerId(String speakerId) {
-        this.speakerId = speakerId;
+    public void setMsgtype(String msgtype) {
+        this.msgtype = msgtype;
     }
 
-    public String getReveiverId() {
-        return reveiverId;
+    public String getSpeakerid() {
+        return speakerid;
     }
 
-    public void setReveiverId(String reveiverId) {
-        this.reveiverId = reveiverId;
+    public void setSpeakerid(String speakerid) {
+        this.speakerid = speakerid;
     }
 
-    public String getMsgContent() {
-        return msgContent;
+    public String getSenderid() {
+        return senderid;
     }
 
-    public void setMsgContent(String msgContent) {
-        this.msgContent = msgContent;
+    public void setSenderid(String senderid) {
+        this.senderid = senderid;
+    }
+
+    public String getReceiverid() {
+        return receiverid;
+    }
+
+    public void setReceiverid(String receiverid) {
+        this.receiverid = receiverid;
     }
 
     @Override
     public String toString() {
-        return "{ \"id\" : \"" + id + "\", \"" + (msgType != null ? "msgType\" : \"" + msgType + "\", \"" : "")
-                + (speakerId != null ? "speakerId\" : \"" + speakerId + "\", \"" : "")
-                + (reveiverId != null ? "reveiverId\" : \"" + reveiverId + "\", \"" : "")
-                + (msgContent != null ? "msgContent\" : \"" + msgContent : "") + "\"}";
+        return "{ \"id\" : \"" + id + "\", \"" + (sendtime != null ? "sendtime\" : \"" + sendtime + "\", \"" : "")
+                + (msgtype != null ? "msgtype\" : \"" + msgtype + "\", \"" : "")
+                + (speakerid != null ? "speakerid\" : \"" + speakerid + "\", \"" : "")
+                + (senderid != null ? "senderid\" : \"" + senderid + "\", \"" : "")
+                + (receiverid != null ? "receiverid\" : \"" + receiverid + "\", \"" : "")
+                + (msgcontent != null ? "msgcontent\" : \"" + msgcontent : "") + "\"}";
     }
 }

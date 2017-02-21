@@ -24,7 +24,7 @@ public class NettyMsgHandler extends ChannelHandlerAdapter {
         String body = (String) msg;
         logger.debug("服务器接收到消息:{}", body);
         
-        String rsMsg = nettyRequestDispatcher.dispatch(body);
+        String rsMsg = nettyRequestDispatcher.dispatch(ctx, body);
         
         // 将响应消息写入缓冲区,等待发送
         ctx.write(rsMsg);
