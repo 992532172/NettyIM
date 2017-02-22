@@ -25,11 +25,12 @@ public class NettyRequestDispatcher {
     private ChatMsgService chatMsgService;
 
     public String dispatch(ChannelHandlerContext ctx, String requestData) {
+        Result rs = new Result();
         BaseNettyMsg request = GsonUtil.json2Obj(requestData, BaseNettyMsg.class);
         if (NettyMsgTypeEnmu.LOGIN.name().equals(request.getRqType())) {
             String loginRequest = request.getMsgContent();
             UserDomain domain = GsonUtil.json2Obj(loginRequest, UserDomain.class);
-            Result rs = userService.login(domain);
+            rs = userService.login(domain);
             if (Result.SUCCESS_CODE.equals(rs.getCode())) {
                 Channel channel = ctx.channel();
                 Channel returnChannel = clientStatusService.addClient(rs.getMsg(), channel);
@@ -37,15 +38,15 @@ public class NettyRequestDispatcher {
                     multiLogin(returnChannel);
                 }
             }
-            return GsonUtil.toJsonStr(rs);
         } else if (NettyMsgTypeEnmu.SIMPLE_CHAT.name().equals(request.getRqType())) {
             ChatMsgDomain msgDomain = GsonUtil.json2Obj(request.getMsgContent(), ChatMsgDomain.class);
             msgDomain.setSendtime(new Date());
-            Result rs = chatMsgService.sendChatMsg(msgDomain);
-            
+            rs = chatMsgService.sendChatMsg(msgDomain);
+            return null;
+        } else {
+            rs.setValue("-1","无法识别的请求类型");
         }
-
-        return null;
+        return GsonUtil.toJsonStr(rs);
     }
 
     private void multiLogin(Channel channel) {

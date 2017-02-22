@@ -7,7 +7,7 @@
     <result column="speakerid" property="speakerid" jdbcType="VARCHAR" />
     <result column="senderid" property="senderid" jdbcType="VARCHAR" />
     <result column="receiverid" property="receiverid" jdbcType="VARCHAR" />
-    <result column="sendtime" property="sendtime" jdbcType="DATE" />
+    <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="net.wehotel.zl.db.entity.ChatMsgInfo" extends="BaseResultMap" >
     <result column="msgcontent" property="msgcontent" jdbcType="LONGVARCHAR" />
@@ -129,7 +129,7 @@
       senderid, receiverid, sendtime, 
       msgcontent)
     values (#{id,jdbcType=INTEGER}, #{msgtype,jdbcType=VARCHAR}, #{speakerid,jdbcType=VARCHAR}, 
-      #{senderid,jdbcType=VARCHAR}, #{receiverid,jdbcType=VARCHAR}, #{sendtime,jdbcType=DATE}, 
+      #{senderid,jdbcType=VARCHAR}, #{receiverid,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, 
       #{msgcontent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.wehotel.zl.db.entity.ChatMsgInfo" >
@@ -174,7 +174,7 @@
         #{receiverid,jdbcType=VARCHAR},
       </if>
       <if test="sendtime != null" >
-        #{sendtime,jdbcType=DATE},
+        #{sendtime,jdbcType=TIMESTAMP},
       </if>
       <if test="msgcontent != null" >
         #{msgcontent,jdbcType=LONGVARCHAR},
@@ -206,7 +206,7 @@
         receiverid = #{record.receiverid,jdbcType=VARCHAR},
       </if>
       <if test="record.sendtime != null" >
-        sendtime = #{record.sendtime,jdbcType=DATE},
+        sendtime = #{record.sendtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.msgcontent != null" >
         msgcontent = #{record.msgcontent,jdbcType=LONGVARCHAR},
@@ -223,7 +223,7 @@
       speakerid = #{record.speakerid,jdbcType=VARCHAR},
       senderid = #{record.senderid,jdbcType=VARCHAR},
       receiverid = #{record.receiverid,jdbcType=VARCHAR},
-      sendtime = #{record.sendtime,jdbcType=DATE},
+      sendtime = #{record.sendtime,jdbcType=TIMESTAMP},
       msgcontent = #{record.msgcontent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -236,7 +236,7 @@
       speakerid = #{record.speakerid,jdbcType=VARCHAR},
       senderid = #{record.senderid,jdbcType=VARCHAR},
       receiverid = #{record.receiverid,jdbcType=VARCHAR},
-      sendtime = #{record.sendtime,jdbcType=DATE}
+      sendtime = #{record.sendtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,7 +257,7 @@
         receiverid = #{receiverid,jdbcType=VARCHAR},
       </if>
       <if test="sendtime != null" >
-        sendtime = #{sendtime,jdbcType=DATE},
+        sendtime = #{sendtime,jdbcType=TIMESTAMP},
       </if>
       <if test="msgcontent != null" >
         msgcontent = #{msgcontent,jdbcType=LONGVARCHAR},
@@ -271,7 +271,7 @@
       speakerid = #{speakerid,jdbcType=VARCHAR},
       senderid = #{senderid,jdbcType=VARCHAR},
       receiverid = #{receiverid,jdbcType=VARCHAR},
-      sendtime = #{sendtime,jdbcType=DATE},
+      sendtime = #{sendtime,jdbcType=TIMESTAMP},
       msgcontent = #{msgcontent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -281,7 +281,7 @@
       speakerid = #{speakerid,jdbcType=VARCHAR},
       senderid = #{senderid,jdbcType=VARCHAR},
       receiverid = #{receiverid,jdbcType=VARCHAR},
-      sendtime = #{sendtime,jdbcType=DATE}
+      sendtime = #{sendtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

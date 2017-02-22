@@ -21,20 +21,21 @@ public class ChatMsgService {
             logger.debug("聊天消息请求参数校验异常, rs:{}", rs);
             return rs;
         }
-        if(ChatMsgDomain.SIMPLE_CHAT.equals(msgDomain.getMsgtype())){
+        if (ChatMsgDomain.SIMPLE_CHAT.equals(msgDomain.getMsgtype())) {
             msgSender.sendSimpleMsg(msgDomain);
         }
-        
+
         return rs;
     }
-    
+
     private Result checkMsgParm(ChatMsgDomain msgDomain) {
         Result rs = new Result();
-        if(msgDomain == null || StringUtils.isBlank(msgDomain.getMsgcontent())){
+        if (msgDomain == null || StringUtils.isBlank(msgDomain.getMsgcontent())) {
             rs.setValue("-1", "消息内容不能为空");
             return rs;
         }
-        if(StringUtils.isBlank(msgDomain.getMsgtype()) || StringUtils.isBlank(msgDomain.getReceiverid()) || StringUtils.isBlank(msgDomain.getSpeakerid())){
+        if (StringUtils.isBlank(msgDomain.getMsgtype()) || StringUtils.isBlank(msgDomain.getReceiverid())
+                || StringUtils.isBlank(msgDomain.getSpeakerid())) {
             rs.setValue("-1", "缺少必要参数");
             return rs;
         }

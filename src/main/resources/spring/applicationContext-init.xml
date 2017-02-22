@@ -19,6 +19,9 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="initServerBean" class="net.wehotel.zl.web.InitServer" init-method="init" destroy-method="destroy">
+	</bean>
 
 	<!-- 自动扫描的包名 -->
 	<context:component-scan base-package="net.wehotel.zl" />

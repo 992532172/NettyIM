@@ -1,4 +1,4 @@
-package net.wehotel.zl.netty;
+package net.wehotel.zl.netty.server;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,10 +8,13 @@ import java.net.SocketAddress;
 
 import net.wehotel.zl.service.NettyRequestDispatcher;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NettyMsgHandler extends ChannelHandlerAdapter {
     private Logger logger = LoggerFactory.getLogger(NettyMsgHandler.class);
     
@@ -26,8 +29,10 @@ public class NettyMsgHandler extends ChannelHandlerAdapter {
         
         String rsMsg = nettyRequestDispatcher.dispatch(ctx, body);
         
-        // 将响应消息写入缓冲区,等待发送
-        ctx.write(rsMsg);
+        if(StringUtils.isNotBlank(rsMsg)){
+            // 将响应消息写入缓冲区,等待发送
+            ctx.write(rsMsg);
+        }
     }
 
     @Override
@@ -44,10 +49,19 @@ public class NettyMsgHandler extends ChannelHandlerAdapter {
     
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
         logger.debug("channelActive, ctx:{}", ctx);
     }
     
     @Override
     public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise promise) throws Exception {
+        super.connect(ctx, remoteAddress, localAddress, promise);
+        logger.debug("connect,{}",remoteAddress);
+    }
+
+    @Override
+    public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+        super.disconnect(ctx, promise);
+        logger.debug("disconnect,{}", ctx.channel().remoteAddress());
     }
 }

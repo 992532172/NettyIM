@@ -10,12 +10,22 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class MsgSender {
+    private MsgSender(){
+    }
+    
+    private static class Inner{
+        static MsgSender instance = new MsgSender();
+    }
+    
+    public MsgSender getInstance() {
+        return Inner.instance;
+    }
     private Logger logger = LoggerFactory.getLogger(MsgSender.class);
-
+    
     @Autowired
     private ClientStatusService clientStatusService;
     @Autowired
@@ -34,5 +44,9 @@ public class MsgSender {
                 logger.error("消息入库失败,msg:" + msgDomain.toString(), e);
             }
         }
+    }
+    
+    public void sendGoupChatMsg(ChatMsgDomain msgDomain){
+//        Channel receiverChannel = clientStatusService.getClientById(msgDomain.getReceiverid());
     }
 }

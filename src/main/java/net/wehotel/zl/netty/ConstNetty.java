@@ -15,6 +15,6 @@ public class ConstNetty {
     
     public static int HEAD_SIZE = 4;// 消息头大小,消息头是一个int值,占4位
 
-    public static int NETTY_PORT = 9999;// netty服务器监听接口
+    public static int NETTY_PORT = 9090;// netty服务器监听接口
     
 }

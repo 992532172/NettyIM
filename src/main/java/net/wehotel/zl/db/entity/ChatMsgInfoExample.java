@@ -2,7 +2,6 @@ package net.wehotel.zl.db.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class ChatMsgInfoExample {
@@ -104,32 +103,6 @@ public class ChatMsgInfoExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -483,52 +456,52 @@ public class ChatMsgInfoExample {
         }
 
         public Criteria andSendtimeEqualTo(Date value) {
-            addCriterionForJDBCDate("sendtime =", value, "sendtime");
+            addCriterion("sendtime =", value, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("sendtime <>", value, "sendtime");
+            addCriterion("sendtime <>", value, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("sendtime >", value, "sendtime");
+            addCriterion("sendtime >", value, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("sendtime >=", value, "sendtime");
+            addCriterion("sendtime >=", value, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeLessThan(Date value) {
-            addCriterionForJDBCDate("sendtime <", value, "sendtime");
+            addCriterion("sendtime <", value, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("sendtime <=", value, "sendtime");
+            addCriterion("sendtime <=", value, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeIn(List<Date> values) {
-            addCriterionForJDBCDate("sendtime in", values, "sendtime");
+            addCriterion("sendtime in", values, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("sendtime not in", values, "sendtime");
+            addCriterion("sendtime not in", values, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("sendtime between", value1, value2, "sendtime");
+            addCriterion("sendtime between", value1, value2, "sendtime");
             return (Criteria) this;
         }
 
         public Criteria andSendtimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("sendtime not between", value1, value2, "sendtime");
+            addCriterion("sendtime not between", value1, value2, "sendtime");
             return (Criteria) this;
         }
     }

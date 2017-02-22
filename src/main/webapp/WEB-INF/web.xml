@@ -33,7 +33,7 @@
 	<!-- 初始化服务 -->
 	<!-- <servlet>
 		<servlet-name>InitServer</servlet-name>
-		<servlet-class>net.hubs1.ids.bookingcomservice.web.InitServer</servlet-class>
+		<servlet-class>net.wehotel.zl.web.InitServer</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet> -->
 
