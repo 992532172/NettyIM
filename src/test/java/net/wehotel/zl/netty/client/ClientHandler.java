@@ -1,11 +1,7 @@
 package net.wehotel.zl.netty.client;
 
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPromise;
-
-import java.net.SocketAddress;
-
+import io.netty.channel.SimpleChannelInboundHandler;
 import net.wehotel.zl.api.domain.ChatMsgDomain;
 import net.wehotel.zl.api.request.BaseNettyMsg;
 import net.wehotel.zl.commen.NettyMsgTypeEnmu;
@@ -14,7 +10,7 @@ import net.wehotel.zl.util.GsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientHandler extends ChannelHandlerAdapter {
+public class ClientHandler extends SimpleChannelInboundHandler<String> {
     private Logger logger = LoggerFactory.getLogger(ClientHandler.class);
     
     @Override
@@ -58,17 +54,16 @@ public class ClientHandler extends ChannelHandlerAdapter {
 //        ctx.channel().writeAndFlush(msg);
         logger.info("channelActive, remoteAddress:{}", ctx.channel().remoteAddress());
     }
-    
-    @Override
-    public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise promise) throws Exception {
-        super.connect(ctx, remoteAddress, localAddress, promise);
-        logger.info("connect:{}", remoteAddress);
-    }
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
         super.channelRegistered(ctx);
         logger.info("register");
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext paramChannelHandlerContext, String paramI) throws Exception {
+        logger.info("channelread0");
     }
     
 }

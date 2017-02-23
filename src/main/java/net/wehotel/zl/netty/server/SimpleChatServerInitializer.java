@@ -1,8 +1,9 @@
-package net.wehotel.zl.netty;
+package net.wehotel.zl.netty.server;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
-import net.wehotel.zl.netty.server.NettyMsgHandler;
+import net.wehotel.zl.netty.SpecficLengthDecoder;
+import net.wehotel.zl.netty.SpecficLengthEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

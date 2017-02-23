@@ -7,10 +7,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import java.net.InetSocketAddress;
-
-import net.wehotel.zl.netty.SimpleChatServerInitializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +18,7 @@ public class NettyServer {
 
     @Autowired
     private SimpleChatServerInitializer simpleChatServerInitializer;
-    
+
     public void initNettServer(int port) {
         // 配置服务端NIO线程组
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -35,9 +31,10 @@ public class NettyServer {
             b.childOption(ChannelOption.SO_KEEPALIVE, true);// socketchannel的设置,维持链接的活跃，清除死链接
             b.childOption(ChannelOption.TCP_NODELAY, true);// socketchannel的设置,关闭延迟发送
             b.childHandler(simpleChatServerInitializer);// 绑定消息处理器
-            ChannelFuture closeFuture = b.bind(new InetSocketAddress("127.0.0.1",port)).sync();
-            logger.info("Netty服务器初始化, url={}", closeFuture.channel().localAddress());
-            closeFuture.channel().closeFuture().sync();// 阻塞,直到serverSocketChannel关闭
+            ChannelFuture channelFuture = b.bind(port).sync();// 阻塞,知道netty服务器启动完成
+            logger.info("Netty服务启动成功,port:{}", port);
+            
+            channelFuture.channel().closeFuture().sync();// 阻塞,直到serverSocketChannel关闭
         } catch (Exception e) {
             logger.error("NettyTimeServer异常中断:", e);
         } finally {

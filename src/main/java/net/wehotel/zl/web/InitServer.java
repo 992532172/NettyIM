@@ -23,7 +23,6 @@ public class InitServer extends HttpServlet {
     public void init() throws ServletException {
         logger.info(">>> Start Init service");
         nettyServer.initNettServer(ConstNetty.NETTY_PORT);
-        logger.info("service Start >>>>>>>>>>");
     }
 
     @Override

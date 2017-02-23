@@ -6,6 +6,8 @@ package net.wehotel.zl.api.request;
  * @date 2017年2月17日 下午5:12:17
  */
 public class BaseNettyMsg {
+    public static String IDLE_RQ = "IDLE";
+    
     private String rqType;// 请求类型
     private String msgContent;// 请求内容
 

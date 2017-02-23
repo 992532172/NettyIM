@@ -14,18 +14,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MsgSender {
-    private MsgSender(){
+    private MsgSender() {
     }
-    
-    private static class Inner{
+
+    private static class Inner {
         static MsgSender instance = new MsgSender();
     }
-    
+
     public MsgSender getInstance() {
         return Inner.instance;
     }
+
     private Logger logger = LoggerFactory.getLogger(MsgSender.class);
-    
+
     @Autowired
     private ClientStatusService clientStatusService;
     @Autowired
@@ -34,7 +35,7 @@ public class MsgSender {
     public void sendSimpleMsg(ChatMsgDomain msgDomain) {
         Channel receiverChannel = clientStatusService.getClientById(msgDomain.getReceiverid());
         if (receiverChannel != null) {
-            receiverChannel.write(GsonUtil.toJsonStr(msgDomain));
+            receiverChannel.writeAndFlush(GsonUtil.toJsonStr(msgDomain));
         } else {
             ChatMsgInfo record = new ChatMsgInfo();
             try {
@@ -45,8 +46,8 @@ public class MsgSender {
             }
         }
     }
-    
-    public void sendGoupChatMsg(ChatMsgDomain msgDomain){
-//        Channel receiverChannel = clientStatusService.getClientById(msgDomain.getReceiverid());
+
+    public void sendGoupChatMsg(ChatMsgDomain msgDomain) {
+        // Channel receiverChannel = clientStatusService.getClientById(msgDomain.getReceiverid());
     }
 }

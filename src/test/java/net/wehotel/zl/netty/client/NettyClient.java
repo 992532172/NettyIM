@@ -9,16 +9,9 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-
-import java.net.SocketAddress;
-
-import net.wehotel.zl.api.domain.ChatMsgDomain;
-import net.wehotel.zl.api.request.BaseNettyMsg;
-import net.wehotel.zl.commen.NettyMsgTypeEnmu;
 import net.wehotel.zl.netty.ConstNetty;
 import net.wehotel.zl.netty.SpecficLengthDecoder;
 import net.wehotel.zl.netty.SpecficLengthEncoder;
-import net.wehotel.zl.util.GsonUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +20,7 @@ public class NettyClient {
     private static Logger logger = LoggerFactory.getLogger(NettyClient.class);
 
     public static void main(String[] args) {
-        initNettServer();
+//        initNettServer();
 
 //        try {
 //            Socket client = new Socket("127.0.0.1", ConstNetty.NETTY_PORT);
@@ -37,12 +30,11 @@ public class NettyClient {
 //            pw.flush();
 //            pw.close();
 //        } catch (Exception e) {
-//            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
     }
 
-    public static void initNettServer() {
+    public static void initNettServer(String msg) {
         // 配置服务端NIO线程组
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -65,8 +57,7 @@ public class NettyClient {
             logger.info("connect {}", future.isSuccess());
             if (future.isSuccess()) {
                 Channel channel = future.channel();
-                SocketAddress address = channel.remoteAddress();
-                channel.writeAndFlush(getMsg());
+                channel.writeAndFlush(msg);
             }
             future.channel().closeFuture().sync();
         } catch (Exception e) {
@@ -77,17 +68,5 @@ public class NettyClient {
         }
     }
 
-    private static String getMsg() {
-
-        BaseNettyMsg msg = new BaseNettyMsg();
-        msg.setRqType(NettyMsgTypeEnmu.SIMPLE_CHAT.name());
-        ChatMsgDomain domain = new ChatMsgDomain();
-        domain.setMsgtype(ChatMsgDomain.SIMPLE_CHAT);
-        domain.setSenderid("1");
-        domain.setReceiverid("2");
-        domain.setSpeakerid("1");
-        domain.setMsgcontent("hello");
-        msg.setMsgContent(GsonUtil.toJsonStr(domain));
-        return GsonUtil.toJsonStr(msg);
-    }
+    
 }

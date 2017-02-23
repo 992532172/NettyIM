@@ -12,11 +12,15 @@ import net.wehotel.zl.api.response.Result;
 import net.wehotel.zl.commen.NettyMsgTypeEnmu;
 import net.wehotel.zl.util.GsonUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NettyRequestDispatcher {
+    private Logger logger = LoggerFactory.getLogger(NettyRequestDispatcher.class);
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -28,15 +32,20 @@ public class NettyRequestDispatcher {
         Result rs = new Result();
         BaseNettyMsg request = GsonUtil.json2Obj(requestData, BaseNettyMsg.class);
         if (NettyMsgTypeEnmu.LOGIN.name().equals(request.getRqType())) {
-            String loginRequest = request.getMsgContent();
-            UserDomain domain = GsonUtil.json2Obj(loginRequest, UserDomain.class);
-            rs = userService.login(domain);
-            if (Result.SUCCESS_CODE.equals(rs.getCode())) {
-                Channel channel = ctx.channel();
-                Channel returnChannel = clientStatusService.addClient(rs.getMsg(), channel);
-                if (!channel.equals(returnChannel)) {
-                    multiLogin(returnChannel);
+            try {
+                String loginRequest = request.getMsgContent();
+                UserDomain domain = GsonUtil.json2Obj(loginRequest, UserDomain.class);
+                rs = userService.login(domain);
+                if (Result.SUCCESS_CODE.equals(rs.getCode())) {
+                    Channel channel = ctx.channel();
+                    Channel returnChannel = clientStatusService.addClient(rs.getMsg(), channel);
+                    if (!channel.equals(returnChannel)) {
+                        multiLogin(returnChannel);
+                    }
                 }
+            } catch (Exception e) {
+                rs.setValue("-1", "登录失败:未知异常");
+                logger.error("", e);
             }
         } else if (NettyMsgTypeEnmu.SIMPLE_CHAT.name().equals(request.getRqType())) {
             ChatMsgDomain msgDomain = GsonUtil.json2Obj(request.getMsgContent(), ChatMsgDomain.class);
@@ -44,7 +53,7 @@ public class NettyRequestDispatcher {
             rs = chatMsgService.sendChatMsg(msgDomain);
             return null;
         } else {
-            rs.setValue("-1","无法识别的请求类型");
+            rs.setValue("-1", "无法识别的请求类型");
         }
         return GsonUtil.toJsonStr(rs);
     }

@@ -6,7 +6,7 @@ public class ChatMsgDomain {
     public static final String SIMPLE_CHAT = "1";
     public static final String GROUP_CHAT = "2";
 
-    private int id;// 消息流水号
+    private Integer id;// 消息流水号
     private Date sendtime;// 服务器接收到消息的时间
     private String msgtype;// 消息类型
     private String speakerid;// 发言者Id
@@ -22,11 +22,11 @@ public class ChatMsgDomain {
         this.msgcontent = msgcontent;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
