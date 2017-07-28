@@ -8,8 +8,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:spring/applicationContext-init.xml,
-			classpath:spring/applicationContext-datasource.xml
-		    <!-- classpath:spring/applicationContext-activemq.xml, -->
+			classpath:spring/applicationContext-datasource.xml,
+		    classpath:spring/applicationContext-rmq.xml
 		</param-value>
 	</context-param>
 
