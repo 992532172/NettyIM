@@ -31,11 +31,11 @@
 	</filter-mapping>
 
 	<!-- 初始化服务 -->
-	<!-- <servlet>
+	 <!--<servlet>
 		<servlet-name>InitServer</servlet-name>
 		<servlet-class>net.wehotel.zl.web.InitServer</servlet-class>
 		<load-on-startup>1</load-on-startup>
-	</servlet> -->
+	</servlet>-->
 
 	<!-- <welcome-file-list> <welcome-file>index.html</welcome-file> </welcome-file-list> -->
 
