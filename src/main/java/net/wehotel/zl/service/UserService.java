@@ -3,7 +3,7 @@ package net.wehotel.zl.service;
 import net.wehotel.zl.api.domain.UserDomain;
 import net.wehotel.zl.api.response.Result;
 import net.wehotel.zl.db.entity.UserInfo;
-import net.wehotel.zl.service.dbservice.UserDBService;
+import net.wehotel.zl.db.dal.UserDAL;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class UserService {
     private Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    private UserDBService userdbService;
+    private UserDAL userdbService;
 
     /**
      * 用户注册

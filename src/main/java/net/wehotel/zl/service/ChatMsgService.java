@@ -8,7 +8,7 @@ import net.wehotel.zl.commen.NettyMsgTypeEnmu;
 import net.wehotel.zl.db.entity.ChatMsgInfo;
 import net.wehotel.zl.rmq.RmqSender;
 import net.wehotel.zl.util.NettyMsgSendUtil;
-import net.wehotel.zl.service.dbservice.ChatMsgDBService;
+import net.wehotel.zl.db.dal.ChatMsgDAL;
 import net.wehotel.zl.util.GsonUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -26,7 +26,7 @@ public class ChatMsgService {
     @Autowired
     private ClientStatusService clientStatusService;
     @Autowired
-    private ChatMsgDBService chatMsgDBService;
+    private ChatMsgDAL chatMsgDAL;
     @Autowired
     private RmqSender rmqSender;
 
@@ -51,7 +51,7 @@ public class ChatMsgService {
         Channel client = clientStatusService.getClientById(userid);
         int page = 1;
         List<ChatMsgInfo> returnList = new ArrayList<>();
-        List<ChatMsgInfo> msgList = chatMsgDBService.pageMsgByReceiver(userid, page);
+        List<ChatMsgInfo> msgList = chatMsgDAL.pageMsgByReceiver(userid, page);
         while(CollectionUtils.isNotEmpty(msgList)){
             returnList.addAll(msgList);
         }

@@ -1,7 +1,7 @@
 package net.wehotel.zl.rmq;
 
 import net.wehotel.zl.api.domain.ChatMsgDomain;
-import net.wehotel.zl.service.dbservice.ChatMsgDBService;
+import net.wehotel.zl.db.dal.ChatMsgDAL;
 import net.wehotel.zl.util.GsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +16,12 @@ public class RmqReceiver {
     private Logger logger = LoggerFactory.getLogger(RmqReceiver.class);
 
     @Autowired
-    private ChatMsgDBService chatMsgDBService;
+    private ChatMsgDAL chatMsgDAL;
 
     public void onMessage(String msg){
         try{
             ChatMsgDomain domain = GsonUtil.json2Obj(msg, ChatMsgDomain.class);
-            chatMsgDBService.saveChatMsg(domain);
+            chatMsgDAL.saveChatMsg(domain);
         } catch (Exception e) {
             logger.error("消息保存失败," + msg, e);
         }
