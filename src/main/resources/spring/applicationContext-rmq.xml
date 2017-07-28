@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+    http://www.springframework.org/schema/rabbit
+    http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <!-- 此位置是相对于:部署后的项目根路径 -->
+                <!-- <value>/WEB-INF/cache.properties</value> -->
+                <!-- 此位置是相对于:文件直接在src 目录下 -->
+                <!-- <value>classpath*:cache.properties</value> -->
+                <!-- 此位置是相对于:文件在目录下面 -->
+                <!-- <value>classpath*:cache/cache.properties</value> -->
+                <value>classpath:/rabbitmq.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 自动扫描的包名 -->
+    <context:component-scan base-package="net.wehotel.zl"/>
+
+    <!-- producer配置 -->
+
+    <!--
+    配置connectFactory
+    addresses:rmq服务的url,可以配置多个，用逗号分开
+    username,password：rmq登录用户
+    virtual-host：虚拟主机,用于用户权限控制
+     -->
+    <rabbit:connection-factory id="connectionFactory" addresses="${rmq.url}" username="${rmq.username}"
+                               password="${rmq.password}" virtual-host="${rmq.vhost}"/>
+    <rabbit:admin id="testAdmin" connection-factory="connectionFactory"/>
+
+    <!-- spring template声明
+    exchange：rmq的交换机名
+    -->
+    <rabbit:template exchange="${rmq.chat.exchange.name}" id="rmqTemplate" connection-factory="connectionFactory"/>
+
+
+    <!-- Consumer配置 -->
+    <!-- 声明一个queue
+    durable:是否持久化
+    exclusive: 仅创建者可以使用的私有队列，断开后自动删除
+    auto_delete: 当所有消费客户端连接断开后，是否自动删除队列
+     -->
+    <rabbit:queue id="chatqueue" name="${rmq.chat.queue.name}" durable="true" auto-delete="false" exclusive="false"/>
+
+    <!-- consumer config
+    消费者配置
+    method：接收到消息后执行的方法
+    queue-names：监听的队列
+    -->
+    <rabbit:listener-container connection-factory="connectionFactory" concurrency="10">
+        <rabbit:listener ref="rmqReceiver" method="onMessage" queue-names="${rmq.queue.name}"/>
+    </rabbit:listener-container>
+</beans>
