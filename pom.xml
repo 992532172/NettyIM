@@ -13,12 +13,6 @@
 	</properties>
 
 	<dependencies>
-		<!-- private Repo -->
-		<dependency>
-			<groupId>net.wehotel.zl</groupId>
-			<artifactId>itframework</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<!-- apache -->
 		<dependency>
 			<groupId>commons-lang</groupId>
