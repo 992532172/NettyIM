@@ -39,6 +39,7 @@ public class NettyRequestDispatcher {
                 if (Result.SUCCESS_CODE.equals(rs.getCode())) {
                     Channel channel = ctx.channel();
                     Channel returnChannel = clientStatusService.addClient(rs.getMsg(), channel);
+                    chatMsgService.appendOutLineMsg(rs.getMsg());
                     if (!channel.equals(returnChannel)) {
                         multiLogin(returnChannel);
                     }

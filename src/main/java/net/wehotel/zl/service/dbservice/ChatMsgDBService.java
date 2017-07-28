@@ -7,11 +7,14 @@ import net.wehotel.zl.db.dao.ChatMsgInfoMapper;
 import net.wehotel.zl.db.entity.ChatMsgInfo;
 import net.wehotel.zl.db.entity.ChatMsgInfoExample;
 
+import org.h2.store.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatMsgDBService {
+    private static int PAGE_SIZE = 20;
+
     @Autowired
     private ChatMsgInfoMapper chatMsgInfoMapper; 
     
@@ -33,6 +36,19 @@ public class ChatMsgDBService {
     public List<ChatMsgInfo> findMsgByReceiver(String receiverid){
         ChatMsgInfoExample example = new ChatMsgInfoExample();
         example.createCriteria().andReceiveridEqualTo(receiverid);
+        example.setOrderByClause("updatetime asc");
+        return chatMsgInfoMapper.selectByExample(example );
+    }
+
+    public List<ChatMsgInfo> pageMsgByReceiver(String receiverid, Integer page){
+        if(page == null || page <= 0){
+            page = 1;
+        }
+        ChatMsgInfoExample example = new ChatMsgInfoExample();
+        example.createCriteria().andReceiveridEqualTo(receiverid);
+        example.setOrderByClause("updatetime asc");
+        example.setLimitSize(PAGE_SIZE);
+        example.setLimitStart(PAGE_SIZE * (page - 1));
         return chatMsgInfoMapper.selectByExample(example );
     }
 }

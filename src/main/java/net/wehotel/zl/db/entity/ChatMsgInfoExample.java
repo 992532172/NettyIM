@@ -11,6 +11,10 @@ public class ChatMsgInfoExample {
 
     protected List<Criteria> oredCriteria;
 
+    protected Integer limitStart;
+
+    protected Integer limitSize;
+
     public ChatMsgInfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -62,6 +66,22 @@ public class ChatMsgInfoExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public void setLimitStart(Integer limitStart) {
+        this.limitStart=limitStart;
+    }
+
+    public Integer getLimitStart() {
+        return limitStart;
+    }
+
+    public void setLimitSize(Integer limitSize) {
+        this.limitSize=limitSize;
+    }
+
+    public Integer getLimitSize() {
+        return limitSize;
     }
 
     protected abstract static class GeneratedCriteria {
