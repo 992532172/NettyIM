@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-       http://www.springframework.org/schema/task  http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
        default-autowire="byName">
 
     <bean id="placeholderConfig"
@@ -16,34 +13,21 @@
             <list>
                 <value>classpath:dbconfig.properties</value>
                 <value>classpath:rabbitmq.properties</value>
+                <value>classpath:nettyconfig.properties</value>
             </list>
         </property>
     </bean>
 
-    <bean id="initServerBean" class="net.wehotel.zl.web.InitServer" init-method="init" destroy-method="destroy">
+    <bean id="connectionFactory" class="net.wehotel.zl.netty.factory.ConnectionFactory" init-method="createConnetion" destroy-method="close">
+        <property name="nettyConfig" ref="nettyConfig"/>
     </bean>
+    <bean id="nettyConfig" class="net.wehotel.zl.netty.factory.NettyConfig">
+        <property name="host" value="${netty.port}"/>
+        <property name="msgHandler" ref="nettyMsgHandler"/>
+    </bean>
+
 
     <!-- 自动扫描的包名 -->
     <context:component-scan base-package="net.wehotel.zl"/>
 
-    <!-- 指定spring代理方式为cglib -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
-
-    <context:annotation-config/>
-    <task:annotation-driven/>
-    <task:scheduler id="bookingcomScheduler" pool-size="5"/>
-    <bean id="velocityEngine"
-          class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-        <property name="velocityProperties">
-            <props>
-                <prop key="resource.loader">file</prop>
-                <prop key="file.resource.loader.path">.</prop>
-                <prop key="file.resource.loader.class">
-                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-                </prop>
-                <prop key="input.encoding">UTF-8</prop>
-                <prop key="output.encoding">UTF-8</prop>
-            </props>
-        </property>
-    </bean>
 </beans>

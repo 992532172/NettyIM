@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
+// netty服务spring化,不再使用NettyServer启动netty服务
+@Deprecated
 public class NettyServer {
     private Logger logger = LoggerFactory.getLogger(NettyServer.class);
 
     @Autowired
-    private SimpleChatServerInitializer simpleChatServerInitializer;
+    private SimpleChannelInitializer simpleChatServerInitializer;
 
     public void initNettServer(int port) {
         // 配置服务端NIO线程组
