@@ -18,14 +18,13 @@
         </property>
     </bean>
 
-    <bean id="connectionFactory" class="net.wehotel.zl.netty.factory.ConnectionFactory" init-method="createConnetion" destroy-method="close">
+    <bean id="nettyServerStarter" class="net.wehotel.zl.netty.factory.NettyServerStarter" init-method="createServer" destroy-method="close">
         <property name="nettyConfig" ref="nettyConfig"/>
     </bean>
     <bean id="nettyConfig" class="net.wehotel.zl.netty.factory.NettyConfig">
-        <property name="host" value="${netty.port}"/>
+        <property name="port" value="${netty.port}"/>
         <property name="msgHandler" ref="nettyMsgHandler"/>
     </bean>
-
 
     <!-- 自动扫描的包名 -->
     <context:component-scan base-package="net.wehotel.zl"/>

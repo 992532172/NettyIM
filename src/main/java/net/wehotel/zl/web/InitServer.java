@@ -1,27 +1,25 @@
 package net.wehotel.zl.web;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 
-import net.wehotel.zl.netty.factory.ConnectionFactory;
+import net.wehotel.zl.netty.factory.NettyServerStarter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class InitServer extends HttpServlet {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+public class InitServer {
     private Logger logger = LoggerFactory.getLogger(InitServer.class);
+    private NettyServerStarter nettyServerStarter;
 
-    @Override
     public void init() throws ServletException {
+        try {
+            nettyServerStarter.createServer();
+        } catch (Exception e){
+            logger.error("Netty服务异常", e);
+        }
     }
 
-    @Override
     public void destroy() {
-        super.destroy();
+        nettyServerStarter.close();
     }
 }
