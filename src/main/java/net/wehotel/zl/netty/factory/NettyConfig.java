@@ -15,7 +15,7 @@ public class NettyConfig {
     private ChannelOutboundHandler msgEncoder;
     private ChannelInboundHandler msgDecoder;
     
-    public void initConfig() {
+    private void initConfig() {
         if (childHandler == null) {// 默认childhandler
             logger.debug("未配置childHandler,使用默认的net.wehotel.zl.netty.factory.SimpleChannelInitializer");
             childHandler = new SimpleChannelInitializer();

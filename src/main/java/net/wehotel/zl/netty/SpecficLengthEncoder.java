@@ -14,7 +14,7 @@ public class SpecficLengthEncoder extends MessageToByteEncoder<String> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, String msg, ByteBuf buffer) throws Exception {
-        byte[] data = msg.getBytes();
+        byte[] data = msg.getBytes(ConstNetty.UTF8);
         buffer.writeInt(data.length);// 写入消息长度
         buffer.writeBytes(data);// 写入消息
     }
