@@ -7,15 +7,22 @@ import net.wehotel.zl.netty.SpecficLengthEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
+
 public class NettyConfig {
     private Logger logger = LoggerFactory.getLogger(NettyConfig.class);
-    private Integer port = 9990;
+    private Integer port = null;
     private ChannelInboundHandler childHandler;
     private ChannelInboundHandler msgHandler;
     private ChannelOutboundHandler msgEncoder;
     private ChannelInboundHandler msgDecoder;
-    
+
+    @PostConstruct
     private void initConfig() {
+        if (port == null || port == 0) {
+            port = 9990;
+            logger.debug("未配置监听端口,默认使用{}", port);
+        }
         if (childHandler == null) {// 默认childhandler
             logger.debug("未配置childHandler,使用默认的net.wehotel.zl.netty.factory.SimpleChannelInitializer");
             childHandler = new SimpleChannelInitializer();

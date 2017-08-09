@@ -20,7 +20,7 @@ public class NettyServerStarter {
     private EventLoopGroup workerGroup;
 
     public void createServer() throws InterruptedException {
-        nettyConfig.initConfig();
+//        nettyConfig.initConfig();
         createTcpServer();
     }
 
